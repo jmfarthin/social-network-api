@@ -1,7 +1,8 @@
+require('dotenv').config;
 const { connect, connection } = require('mongoose');
 
-const connectionString =
-    process.env.MONGODB;
+
+const connectionString = 'mongodb://localhost/socialNetwork';
 
 connect(connectionString, {
     useNewUrlParser: true,
