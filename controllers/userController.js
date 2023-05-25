@@ -4,7 +4,7 @@ const createUser = async (req, res) => {
     try {
         const user = await User.create(req.body);
         console.log(user);
-        res.json(user);
+        res.status(200).json(user);
     } catch (err) {
         res.status(500).json(err);
     }
@@ -12,11 +12,11 @@ const createUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     // try {
-        const allUsers = await User.find();
-        console.log(allUsers);
-        res.json(allUsers);
+    const allUsers = await User.find();
+    console.log(allUsers);
+    res.status(200).json(allUsers);
     // } catch (err) {
-        // res.status(500).json(err);
+    // res.status(500).json(err);
     // }
 }
 
