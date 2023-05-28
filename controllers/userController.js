@@ -24,7 +24,7 @@ const getUser = async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.params.userId })
             .populate({ path: 'thoughts' })
-        // .populate({ path: 'friends' });
+            .populate({ path: 'friends' });
         res.status(200).json(user);
     } catch (err) {
         console.error(err);

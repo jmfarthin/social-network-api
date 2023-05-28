@@ -18,8 +18,49 @@ const getAllThoughts = async (req, res) => {
         res.status(500).json(err);
 
     }
+};
+
+const getThought = async (req, res) => {
+    try {
+        const thought = await Thought.findById(req.params.thoughtId);
+        res.status(200).json(thought);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};
+
+const updateThought = async (req, res) => {
+    try {
+        const thought = await Thought.findOneAndUpdate({ _id: req.params.thoughtId },
+            { $set: { ...req.body } }, { new: true, runValidators: true });
+        res.status(200).json(thought);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};
+
+const removeThought = async (req, res) => {
+    try {
+        const thought = await Thought.findByIdAndRemove({ _id: req.params.thoughtId });
+        const user = await User.findOneAndUpdate({ thoughts: req.params.thoughtId },
+            { $pull: { thoughts: req.params.thoughtId } }, { new: true });
+        res.status(200).json("Deleted thought!");
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};
+
+const addReaction = async (req, res) => {
+    try {
+        const thought = await Thought.findByIdAndUpdate({ _id: req.params.thoughtId },
+            { $push: { reactions: { ...req.body } } }, { new: true });
+        res.status(200).json(thought);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
 }
 
-module.exports = { createThought, getAllThoughts };
+module.exports = { createThought, getAllThoughts, getThought, updateThought, removeThought, addReaction };
 
-// getThought, updateThought, removeThought, addReaction, deleteReaction
+//  , , , deleteReaction

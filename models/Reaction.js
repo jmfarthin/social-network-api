@@ -15,7 +15,7 @@ reactionSchema = new Schema(
             type: Date,
             default: Date.now,
             get: function () {
-                return this.createdAt.toLocaleString();
+                return this._doc.createdAt.toLocaleString();
             }
         },
     },
