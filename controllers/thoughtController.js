@@ -59,8 +59,25 @@ const addReaction = async (req, res) => {
         console.error(err);
         res.status(500).json(err);
     }
-}
+};
 
-module.exports = { createThought, getAllThoughts, getThought, updateThought, removeThought, addReaction };
+const deleteReaction = async (req, res) => {
+    try {
+        const thought = await Thought.findByIdAndUpdate({ _id: req.params.thoughtId },
+            { $pull: { reactions: { _id: req.params.reactionId } } }, { new: true });
+        res.status(200).json(thought);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+};
 
-//  , , , deleteReaction
+module.exports = {
+    createThought,
+    getAllThoughts,
+    getThought,
+    updateThought,
+    removeThought,
+    addReaction,
+    deleteReaction
+};
